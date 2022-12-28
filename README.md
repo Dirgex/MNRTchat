@@ -1,2 +1,2 @@
 # MNRTchat
-Realtime chat
+Realtime chat using React,ExpressJs and pusher
