@@ -21,11 +21,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Pusher Test</h1>
-        <p>
-          Try publishing an event to channel <code>my-channel</code>
-          with event name <code>my-event</code>.
-        </p>
+        <h2>Enter your username</h2>
+        <form action="#">
+        <div className="input-group">
+        <input type="text" className="form-control"></input>
+        <button className="btn btn-lg btn-success">Submit</button>
+        </div>
+        </form>
       </header>
     </div>
   );
