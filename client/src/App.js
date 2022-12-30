@@ -6,11 +6,12 @@ function App() {
 
   Pusher.logToConsole = true;
 
-  const pusher = new Pusher('96f23e17a31c2ce9d24d"', {
+  const pusher = new Pusher('96f23e17a31c2ce9d24d', {
     cluster: "eu",
   });
 
   var channel = pusher.subscribe("my-channel");
+
   channel.bind("my-event", function (data) {
     alert(JSON.stringify(data));
     console.log(data);
