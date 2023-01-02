@@ -1,9 +1,13 @@
+html{
+  background-color: #48546a;
+}
+
 .App {
   text-align: center;
 }
 
 
-.App-header {
+.home{
   background-color: #48546a;
   min-height: 100vh;
   display: flex;
@@ -12,4 +16,12 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.chatwindow{
+  background-color: #48546a;
+}
+
+#scrollDiv{
+  overflow-y: scroll;
 }

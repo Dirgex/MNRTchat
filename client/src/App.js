@@ -1,12 +1,19 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Pusher from "pusher-js";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/home.js";
+import Chat from "./pages/chat.js";
+import NotFound from "./pages/404.js";
+import React from 'react';
+
+
 
 function App() {
-
+  /*
   Pusher.logToConsole = true;
 
-  const pusher = new Pusher('96f23e17a31c2ce9d24d', {
+  const pusher = new Pusher("96f23e17a31c2ce9d24d", {
     cluster: "eu",
   });
 
@@ -17,21 +24,23 @@ function App() {
     console.log(data);
   });
 
-
+  */
 
   return (
+
     <div className="App">
-      <header className="App-header">
-        <h2>Enter your username</h2>
-        <form action="#">
-        <div className="input-group">
-        <input type="text" className="form-control"></input>
-        <button className="btn btn-lg btn-success">Submit</button>
-        </div>
-        </form>
-      </header>
+      <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
+        </Routes>
     </div>
+
   );
 }
+
+export const usernameContext = React.createContext(
+  "test"
+)
 
 export default App;
