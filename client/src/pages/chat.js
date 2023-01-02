@@ -15,12 +15,12 @@ function Chat() {
             <h1>Welcome {user}!</h1>
           </div>
           <div className="col">
-            <button className="btn btn-danger btn-lg">Logout</button>
+            <button className="btn btn-success btn-lg">Logout</button>
           </div>
         </div>
         <div className="row m-5">
           <div className="col-2 border">
-            <h4 className="my-3">Room list</h4>
+            <h4 className="my-3 underline"><u>Room list</u></h4>
            <button className="btn btn-lg btn-success my-3"> <i class="bi bi-plus-circle"></i></button>
             <p>Global</p>
             <p>Testing</p>
@@ -85,7 +85,7 @@ function Chat() {
           </div>
 
           <div className="col-2 border">
-            <h4 className="my-3">Users online</h4>
+            <h4 className="my-3"><u>Users online</u></h4>
             <ul>
               <li>{user}</li>
               <li>test</li>
