@@ -1,5 +1,4 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Pusher from "pusher-js";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home.js";

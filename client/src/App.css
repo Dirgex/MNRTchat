@@ -1,5 +1,5 @@
 html{
-  background-color: #48546a;
+  background-color: #d4c07a;
 }
 
 .App {
@@ -8,7 +8,7 @@ html{
 
 
 .home{
-  background-color: #48546a;
+  background-color: #d4c07a;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,9 +19,13 @@ html{
 }
 
 .chatwindow{
-  background-color: #48546a;
+  background-color: #d4c07a;
 }
 
-#scrollDiv{
-  overflow-y: scroll;
+.ownBgText{
+  background-color: #b7e576;
+}
+
+.otherBgText{
+  background-color: #f8f7a5;
 }
