@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from '../assets/mnrtchatlogo.png'
 
 
-function Home(){
+const Home = () => {
     const [username, setUsername] = useState("");
 
     const goToChat = () => {
@@ -24,7 +24,7 @@ function Home(){
 return(
         <>
         <div className="home">
-        <img className="rounded" src={logo}  height="100px" width="200px"/>
+        <img alt="logo" className="rounded" src={logo}  height="100px" width="200px"/>
           <h2>Enter your username</h2>
           <form action="#">
             <div className="input-group">

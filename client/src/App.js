@@ -1,9 +1,9 @@
 import "./App.css";
 import Pusher from "pusher-js";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/home.js";
-import Chat from "./pages/chat.js";
-import NotFound from "./pages/404.js";
+import Home from "./pages/home";
+import Chat from "./pages/chat";
+import NotFound from "./pages/404";
 import React from 'react';
 
 

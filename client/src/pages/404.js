@@ -1,4 +1,4 @@
-function NotFound() {
+const NotFound = () => {
   return (
     <div className="home">
       <div className="container-fluid">

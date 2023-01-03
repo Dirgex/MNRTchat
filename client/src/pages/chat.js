@@ -1,15 +1,34 @@
 import { useState } from "react";
 import logo from '../assets/mnrtchatlogo.png'
+import HandleMessage from '../components/handlemessage'
 
-function Chat() {
+const Chat = () => {
   const user = localStorage.getItem("user");
+  const [message, setMessage] = useState("");
+  const [chatlog, setChatlog] = useState([]);
+  const [room, setRoom] = useState([]);
+
+  const textChange = (e) => {
+    if (e.keyCode === 13 ){
+        setMessage(e.target.value);
+        console.log(e.target.value);
+        e.preventDefault();
+    }
+  }
+
+  const sendButton = (e) => {
+
+    setMessage(e.target.value);
+    console.log(e.target.value);
+    e.preventDefault();
+  }
 
   return (
     <div className="chatwindow">
       <div className="container-fluid">
         <div className="row m-5">
           <div className="col">
-            <img className="rounded" src={logo}  height="100px" width="200px"/>
+            <img className="rounded" alt="logo" src={logo}  height="100px" width="200px"/>
           </div>
           <div className="col">
             <h1>Welcome {user}!</h1>
@@ -21,7 +40,7 @@ function Chat() {
         <div className="row m-5">
           <div className="col-2 border">
             <h4 className="my-3 underline"><u>Room list</u></h4>
-           <button className="btn btn-lg btn-success my-3"> <i class="bi bi-plus-circle"></i></button>
+           <button className="btn btn-lg btn-success my-3"> <i className="bi bi-plus-circle"></i></button>
             <p>Global</p>
             <p>Testing</p>
             <p>React</p>
@@ -31,7 +50,7 @@ function Chat() {
 
             <div>
               <h3 className="col-2 ms-auto">{user}</h3>
-              <p className="ownBgText col-8 ms-auto p-2 ms-3 mb-1 rounded-3 ">
+              <p className="ownBgText col-8 ms-auto p-2 ms-3 mb-1 rounded-3">
                 Hi
               </p>
               <p className="ownBgText col-8 p-2 ms-auto ms-3 mb-1 rounded-3">
@@ -76,12 +95,13 @@ function Chat() {
               </p>
               <p className="col-2 ms-3 mb-3 rounded-3">23:58</p>
             </div>
-            <div className="sticky-bottom position-relative card-footer text-muted d-flex justify-content-start align-items-center p-3">
-              <input type="text" className="form-control"></input>
-              <button className="btn btn-success ms-2">
-                <i class="bi bi-send"></i>
-              </button>
-            </div>
+            <HandleMessage
+            message = {message}
+            username = {user}
+            textChange = {textChange}
+            sendButton = {sendButton}
+            />
+
           </div>
 
           <div className="col-2 border">
