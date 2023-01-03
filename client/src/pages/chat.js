@@ -9,6 +9,7 @@ const Chat = () => {
   const [room, setRoom] = useState([]);
 
   const textChange = (e) => {
+    setMessage(e.target.value);
     if (e.keyCode === 13 ){
         setMessage(e.target.value);
         console.log(e.target.value);
@@ -17,9 +18,7 @@ const Chat = () => {
   }
 
   const sendButton = (e) => {
-
-    setMessage(e.target.value);
-    console.log(e.target.value);
+    console.log(message);
     e.preventDefault();
   }
 
