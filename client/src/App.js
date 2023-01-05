@@ -38,8 +38,6 @@ function App() {
   );
 }
 
-export const usernameContext = React.createContext(
-  "test"
-)
+
 
 export default App;
