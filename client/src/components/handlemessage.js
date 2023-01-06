@@ -17,6 +17,7 @@ const HandleMessage = () => {
         <input
           type="text"
           className="form-control"
+          value={msg}
           onChange={(e) => dispatch(setMessage(e.target.value))}
         ></input>
         <button onClick={() => dispatch(sendMessage())} className="btn btn-success ms-2">
