@@ -1,33 +1,43 @@
 import { useState } from "react";
-import logo from '../assets/mnrtchatlogo.png'
-import HandleMessage from '../components/handlemessage'
+import logo from "../assets/mnrtchatlogo.png";
+import HandleMessage from "../components/handlemessage";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Chat = () => {
-  const user = localStorage.getItem("user");
-  const [message, setMessage] = useState("");
+  const { user } = useSelector((state) => state.username);
+  const dispatch = useDispatch();
+
+  //   const [message, setMessage] = useState("");
   const [chatlog, setChatlog] = useState([]);
   const [room, setRoom] = useState([]);
 
-  const textChange = (e) => {
-    setMessage(e.target.value);
-    if (e.keyCode === 13 ){
-        setMessage(e.target.value);
-        console.log(e.target.value);
-        e.preventDefault();
-    }
-  }
+  //   const textChange = (e) => {
+  //     setMessage(e.target.value);
+  //     if (e.keyCode === 13 ){
+  //         setMessage(e.target.value);
+  //         console.log(e.target.value);
+  //         e.preventDefault();
+  //     }
+  //   }
 
-  const sendButton = (e) => {
-    console.log(message);
-    e.preventDefault();
-  }
+  //   const sendButton = (e) => {
+  //     console.log(message);
+  //     e.preventDefault();
+  //   }
 
   return (
     <div className="chatwindow">
       <div className="container-fluid">
         <div className="row m-5">
           <div className="col">
-            <img className="rounded" alt="logo" src={logo}  height="100px" width="200px"/>
+            <img
+              className="rounded"
+              alt="logo"
+              src={logo}
+              height="100px"
+              width="200px"
+            />
           </div>
           <div className="col">
             <h1>Welcome {user}!</h1>
@@ -38,8 +48,13 @@ const Chat = () => {
         </div>
         <div className="row m-5">
           <div className="col-2 border">
-            <h4 className="my-3 underline"><u>Room list</u></h4>
-           <button className="btn btn-lg btn-success my-3"> <i className="bi bi-plus-circle"></i></button>
+            <h4 className="my-3 underline">
+              <u>Room list</u>
+            </h4>
+            <button className="btn btn-lg btn-success my-3">
+              {" "}
+              <i className="bi bi-plus-circle"></i>
+            </button>
             <p>Global</p>
             <p>Testing</p>
             <p>React</p>
@@ -64,7 +79,9 @@ const Chat = () => {
             <div>
               <h3 className="col-2">You</h3>
               <p className="otherBgText col-8 p-2 ms-3 mb-1 rounded-3 ">Hi</p>
-              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">Hehehehe</p>
+              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
+                Hehehehe
+              </p>
               <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
                 Testing the textboxes
               </p>
@@ -88,23 +105,21 @@ const Chat = () => {
             <div>
               <h3 className="col-2">test</h3>
               <p className="otherBgText col-8 p-2 ms-3 mb-1 rounded-3 ">Hi</p>
-              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">Hehehehe</p>
+              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
+                Hehehehe
+              </p>
               <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
                 Testing the textboxes
               </p>
               <p className="col-2 ms-3 mb-3 rounded-3">23:58</p>
             </div>
-            <HandleMessage
-            message = {message}
-            username = {user}
-            textChange = {textChange}
-            sendButton = {sendButton}
-            />
-
+            <HandleMessage />
           </div>
 
           <div className="col-2 border">
-            <h4 className="my-3"><u>Users online</u></h4>
+            <h4 className="my-3">
+              <u>Users online</u>
+            </h4>
             <ul>
               <li>{user}</li>
               <li>test</li>
@@ -118,6 +133,6 @@ const Chat = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Chat;
