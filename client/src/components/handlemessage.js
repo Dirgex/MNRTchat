@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setMessage, sendMessage } from "../redux/message";
 
-const HandleMessage = () => {
+const HandleMessage = ({user}) => {
   const { msg } = useSelector((state) => state.message);
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const HandleMessage = () => {
           value={msg}
           onChange={(e) => dispatch(setMessage(e.target.value))}
         ></input>
-        <button onClick={() => dispatch(sendMessage())} className="btn btn-success ms-2">
+        <button onClick={() => dispatch(sendMessage({msg, username: user}))} className="btn btn-success ms-2">
           <i className="bi bi-send"></i>
         </button>
       </div>

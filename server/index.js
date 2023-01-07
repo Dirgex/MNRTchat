@@ -25,11 +25,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-  pusher.trigger("my-channel", "my-event", {
-    message: "hello world"
-  });
-})
+app.post('/message', (req, res) => {
+  const reqBody = req.body;
+
+  res.send(reqBody)
+});
 
 app.listen(port, () => console.log("Server started"));

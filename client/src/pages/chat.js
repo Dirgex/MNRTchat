@@ -1,16 +1,14 @@
-import { useState } from "react";
 import logo from "../assets/mnrtchatlogo.png";
 import HandleMessage from "../components/handlemessage";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 const Chat = () => {
   const { user } = useSelector((state) => state.username);
-  const dispatch = useDispatch();
 
-  //   const [message, setMessage] = useState("");
-  const [chatlog, setChatlog] = useState([]);
-  const [room, setRoom] = useState([]);
+
+//   const [chatlog, setChatlog] = useState([]);
+//   const [room, setRoom] = useState([]);
 
   //   const textChange = (e) => {
   //     setMessage(e.target.value);
@@ -52,7 +50,6 @@ const Chat = () => {
               <u>Room list</u>
             </h4>
             <button className="btn btn-lg btn-success my-3">
-              {" "}
               <i className="bi bi-plus-circle"></i>
             </button>
             <p>Global</p>
@@ -113,7 +110,7 @@ const Chat = () => {
               </p>
               <p className="col-2 ms-3 mb-3 rounded-3">23:58</p>
             </div>
-            <HandleMessage />
+            <HandleMessage user={user}/>
           </div>
 
           <div className="col-2 border">
