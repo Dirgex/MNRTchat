@@ -4,9 +4,7 @@ import api from "../api/api";
 export const sendMessage = createAsyncThunk(
   "message/sendMessage",
   async (msg) => {
-    console.log(msg);
-    return api(msg);
-
+    return api(msg)
     // return await api(msg)
     // .then((res) => console.log(res.data))
     // .catch(function(error){
@@ -36,6 +34,7 @@ export const messageSlice = createSlice({
     },
   },
   extraReducers: {
+    // another way of doing it
     // builder.addCase(sendMessage.pending, (state) => {
     //     console.log(state.msg)
     //     console.log("hej")

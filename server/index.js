@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 app.post('/message', (req, res) => {
   const reqBody = req.body;
-
+  pusher.trigger('global_room', 'message', reqBody);
   res.send(reqBody)
 });
 

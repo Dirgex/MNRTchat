@@ -1,14 +1,41 @@
 import logo from "../assets/mnrtchatlogo.png";
 import HandleMessage from "../components/handlemessage";
-import { useSelector } from "react-redux";
-
+import HandleChatlog from "../components/handlechatlog";
+import { useSelector, useDispatch } from "react-redux";
+import Pusher from "pusher-js";
+import { useEffect } from "react";
+import env from "react-dotenv";
+import { setChatlog } from "../redux/chatlog";
 
 const Chat = () => {
   const { user } = useSelector((state) => state.username);
+  const { chat } = useSelector((state) => state.chatlog);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const pusher = new Pusher(env.PUSHERKEY, {
+      cluster: "eu",
+    });
+    const globalRoom = pusher.subscribe("global_room");
+    globalRoom.bind("message", function (data) {
+      console.log(data);
+      console.log(data.subscription_count);
+      dispatch(setChatlog(data));
+    });
 
-//   const [chatlog, setChatlog] = useState([]);
-//   const [room, setRoom] = useState([]);
+    // globalRoom.bind("pusher:subscription_count", function (pusherdata) {
+    //   console.log(pusherdata);
+    //   console.log(pusherdata.subscription_count);
+    // });
+
+    return () => {
+      pusher.unsubscribe("global_room");
+      console.log("hej");
+    };
+  }, [dispatch]);
+
+  //   const [chatlog, setChatlog] = useState([]);
+  //   const [room, setRoom] = useState([]);
 
   //   const textChange = (e) => {
   //     setMessage(e.target.value);
@@ -55,76 +82,17 @@ const Chat = () => {
             <p>Global</p>
             <p>Testing</p>
             <p>React</p>
+
+              <h4 className="my-3">
+                <u>Users online</u>
+              </h4>
+            <p>{console.log()}</p>
+
           </div>
-          <div className="col-8 border vh-100 overflow-auto">
+          <div className="col-10 border vh-100 overflow-auto">
             <h1 className="my-3">Room : Global</h1>
-
-            <div>
-              <h3 className="col-2 ms-auto">{user}</h3>
-              <p className="ownBgText col-8 ms-auto p-2 ms-3 mb-1 rounded-3">
-                Hi
-              </p>
-              <p className="ownBgText col-8 p-2 ms-auto ms-3 mb-1 rounded-3">
-                Hehehehe
-              </p>
-              <p className="ownBgText col-8 p-2 ms-auto ms-3 mb-1 rounded-3">
-                Testing the textboxes
-              </p>
-              <p className="col-2 ms-auto ms-3 mb-3 rounded-3">23:58</p>
-            </div>
-
-            <div>
-              <h3 className="col-2">You</h3>
-              <p className="otherBgText col-8 p-2 ms-3 mb-1 rounded-3 ">Hi</p>
-              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
-                Hehehehe
-              </p>
-              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
-                Testing the textboxes
-              </p>
-              <p className="col-2 ms-3 mb-3 rounded-3">23:58</p>
-            </div>
-
-            <div>
-              <h3 className="col-2 ms-auto">{user}</h3>
-              <p className="ownBgText col-8 ms-auto p-2 ms-3 mb-1 rounded-3">
-                Hi
-              </p>
-              <p className="ownBgText col-8 p-2 ms-auto ms-3 mb-1 rounded-3">
-                Hehehehe
-              </p>
-              <p className="ownBgText col-8 p-2 ms-auto ms-3 mb-1 rounded-3">
-                Testing the textboxes
-              </p>
-              <p className="col-2 ms-auto ms-3 mb-3 rounded-3">23:58</p>
-            </div>
-
-            <div>
-              <h3 className="col-2">test</h3>
-              <p className="otherBgText col-8 p-2 ms-3 mb-1 rounded-3 ">Hi</p>
-              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
-                Hehehehe
-              </p>
-              <p className="otherBgText col-8 p-2  ms-3 mb-1 rounded-3 ">
-                Testing the textboxes
-              </p>
-              <p className="col-2 ms-3 mb-3 rounded-3">23:58</p>
-            </div>
-            <HandleMessage user={user}/>
-          </div>
-
-          <div className="col-2 border">
-            <h4 className="my-3">
-              <u>Users online</u>
-            </h4>
-            <ul>
-              <li>{user}</li>
-              <li>test</li>
-              <li>test</li>
-              <li>test</li>
-              <li>test</li>
-              <li>test</li>
-            </ul>
+            <HandleChatlog chat={chat} />
+            <HandleMessage user={user} />
           </div>
         </div>
       </div>
