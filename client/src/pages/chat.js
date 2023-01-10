@@ -31,6 +31,7 @@ const Chat = () => {
     return () => {
       pusher.unsubscribe("global_room");
       console.log("hej");
+      pusher.disconnect();
     };
   }, [dispatch]);
 
