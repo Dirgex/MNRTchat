@@ -5,6 +5,11 @@ import { v4 as uuidv4 } from "uuid";
 const HandleMessage = ({ user }) => {
   const { msg } = useSelector((state) => state.message);
   const dispatch = useDispatch();
+  const date = new Date();
+  let timestamp = date.toLocaleTimeString('SE',{
+    hour: '2-digit',
+    minute: '2-digit'
+  })
 
   return (
     <>
@@ -13,7 +18,6 @@ const HandleMessage = ({ user }) => {
           e.preventDefault();
         }}
       >
-        <p>{msg}</p>
         <div className="sticky-bottom position-relative card-footer text-muted d-flex justify-content-start align-items-center p-3">
           <input
             type="text"
@@ -23,7 +27,7 @@ const HandleMessage = ({ user }) => {
           ></input>
           <button
             onClick={() =>
-              dispatch(sendMessage({ id: uuidv4(), msg, username: user }))
+              dispatch(sendMessage({ id: uuidv4(), msg, username: user, timestamp: timestamp }))
             }
             className="btn btn-success ms-2"
           >

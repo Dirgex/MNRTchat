@@ -1,21 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import api from "../api/api";
+import { sendMessageApi } from "../api/api";
 
 export const sendMessage = createAsyncThunk(
   "message/sendMessage",
   async (msg) => {
-    return api(msg)
-    // return await api(msg)
-    // .then((res) => console.log(res.data))
-    // .catch(function(error){
-    //     if(error.res){
-    //         console.log(error.res.data)
-    //         console.log(error.res.status)
-    //         console.log(error.res.header)
-    //     }else{
-    //         console.log('error', error.message)
-    //     }
-    // })
+    return sendMessageApi(msg)
   }
 );
 

@@ -19,15 +19,28 @@ const pusher = new Pusher({
   useTLS: true
 });
 
-
+const reqBody = [];
 
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/message', (req, res) => {
   const reqBody = req.body;
   pusher.trigger('global_room', 'message', reqBody);
+  res.send(reqBody)
+});
+
+app.get('/username/get', (req, res) => {
+  //pusher.trigger('global_room', 'message', reqBody);
+  res.send(reqBody)
+});
+
+
+
+app.post('/username/post', (req, res) => {
+  reqBody.push(req.body.username);
+  //pusher.trigger('global_room', 'message', reqBody);
   res.send(reqBody)
 });
 

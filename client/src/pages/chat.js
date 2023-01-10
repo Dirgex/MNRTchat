@@ -19,7 +19,7 @@ const Chat = () => {
     const globalRoom = pusher.subscribe("global_room");
     globalRoom.bind("message", function (data) {
       console.log(data);
-      console.log(data.subscription_count);
+      //console.log(data.subscription_count);
       dispatch(setChatlog(data));
     });
 
@@ -53,8 +53,8 @@ const Chat = () => {
 
   return (
     <div className="chatwindow">
-      <div className="container-fluid">
-        <div className="row m-5">
+      <div className="container-fluid ">
+        <div className="row mt-3 text-center">
           <div className="col">
             <img
               className="rounded"
@@ -67,12 +67,12 @@ const Chat = () => {
           <div className="col">
             <h1>Welcome {user}!</h1>
           </div>
-          <div className="col">
+          <div className="col my-3">
             <button className="btn btn-success btn-lg">Logout</button>
           </div>
         </div>
-        <div className="row m-5">
-          <div className="col-2 border">
+        <div className="row m-3">
+          <div className="col-2 d-none d-sm-block border text-center">
             <h4 className="my-3 underline">
               <u>Room list</u>
             </h4>
@@ -89,9 +89,10 @@ const Chat = () => {
             <p>{console.log()}</p>
 
           </div>
-          <div className="col-10 border vh-100 overflow-auto">
+          <div className="col-10 border overflow-auto" style= {{height: "550px"}}>
             <h1 className="my-3">Room : Global</h1>
-            <HandleChatlog chat={chat} />
+            <HandleChatlog chat={chat}
+            user={user} />
             <HandleMessage user={user} />
           </div>
         </div>

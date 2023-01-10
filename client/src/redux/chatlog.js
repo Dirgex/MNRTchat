@@ -11,7 +11,6 @@ export const chatlogSlice = createSlice({
        return{
         ...state,
         chat: [...state.chat, action.payload],
-
        }
     },
   },

@@ -28,8 +28,6 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="*" element={<NotFound />} />
-
-
         <Route
           path="/chat"
           element={

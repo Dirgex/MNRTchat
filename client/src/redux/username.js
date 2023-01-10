@@ -1,4 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
+import { sendUsernameApi } from '../api/api'
+
+export const sendUsername = createAsyncThunk(
+    "username/sendUsername",
+    async (username) => {
+      return sendUsernameApi(username);
+    }
+  );
+
 
 export const usernameSlice = createSlice({
   name: "username",
