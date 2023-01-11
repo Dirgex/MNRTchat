@@ -7,23 +7,23 @@ import Pusher from "pusher-js";
 import { useEffect } from "react";
 import env from "react-dotenv";
 import { setChatlog } from "../redux/chatlog";
-import { getUserlist } from "../redux/username";
+import { getUserlist,deleteUser,/*setUsercount*/ } from "../redux/username";
 
 
 const Chat = () => {
   const { user } = useSelector((state) => state.username);
   const { chat } = useSelector((state) => state.chatlog);
   const { userlist } = useSelector((state) => state.username);
+ //const { usercount } = useSelector((state) => state.username);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const pusher = new Pusher(env.PUSHERKEY, {
       cluster: "eu",
     });
+    // Pusher.logToConsole = true;
 
     dispatch(getUserlist());
-
-
 
     const globalRoom = pusher.subscribe("global_room");
     globalRoom.bind("message", function (data) {
@@ -36,7 +36,19 @@ const Chat = () => {
     checkConnections.bind("connection", function(data){
        dispatch(getUserlist());
         console.log("is logged in: " + data)
+        console.log(data)
     })
+
+
+    //working code for user count but its too easy.
+    /*
+    const pusherCheck = pusher.subscribe("pushercheck");
+    pusherCheck.bind("pusher:subscription_count", function(data){
+        console.log(data.subscription_count)
+        dispatch(setUsercount(data.subscription_count))
+        console.log(data)
+    })
+    */
 
     // globalRoom.bind("pusher:subscription_count", function (pusherdata) {
     //   console.log(pusherdata);
@@ -45,27 +57,11 @@ const Chat = () => {
 
     return () => {
       pusher.unsubscribe("global_room");
-      console.log("hej");
       pusher.disconnect();
+      //dispatch(deleteUser(user));
+      console.log(user)
     };
-  }, [dispatch]);
-
-  //   const [chatlog, setChatlog] = useState([]);
-  //   const [room, setRoom] = useState([]);
-
-  //   const textChange = (e) => {
-  //     setMessage(e.target.value);
-  //     if (e.keyCode === 13 ){
-  //         setMessage(e.target.value);
-  //         console.log(e.target.value);
-  //         e.preventDefault();
-  //     }
-  //   }
-
-  //   const sendButton = (e) => {
-  //     console.log(message);
-  //     e.preventDefault();
-  //   }
+  }, [dispatch,user]);
 
   return (
     <div className="chatwindow">
@@ -98,6 +94,7 @@ const Chat = () => {
             <p>Global</p>
             <p>Testing</p>
             <p>React</p>
+
             <HandleOnlineUsers userlist={userlist}/>
 
           </div>

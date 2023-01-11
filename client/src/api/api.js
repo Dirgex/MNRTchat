@@ -24,3 +24,12 @@ export const getUserlistApi = async () => {
         alert(error.message + " Something went wrong getting data");
     }
 }
+
+
+export const deleteUserApi = async (username) => {
+    try {
+      await axios.delete("http://localhost:3001/username/delete", username);
+    } catch (error) {
+      alert(error.message + " Something went wrong deleting a user");
+    }
+  };

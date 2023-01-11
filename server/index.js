@@ -44,4 +44,10 @@ app.post('/username/post', (req, res) => {
   res.send(reqBody)
 });
 
+app.delete('/username/delete', (req,res)=> {
+  reqBody.splice(reqBody.indexOf(req.body.username), 1);
+  pusher.trigger('check', 'connection', reqBody);
+  res.send(reqBody);
+})
+
 app.listen(port, () => console.log("Server started"));

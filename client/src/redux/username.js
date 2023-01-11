@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { sendUsernameApi, getUserlistApi } from "../api/api";
+import { sendUsernameApi, getUserlistApi, deleteUserApi } from "../api/api";
 
 export const sendUsername = createAsyncThunk(
   "username/sendUsername",
@@ -17,24 +17,31 @@ export const getUserlist = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk(
+    "username/deleteUser",
+    async(username) => {
+        return deleteUserApi(username);
+    }
+)
+
 export const usernameSlice = createSlice({
   name: "username",
   initialState: {
     user: "",
     userlist: [],
     isLoading: false,
+    //usercount: "",
   },
 
   reducers: {
     setUsername: (state, action) => {
       state.user = action.payload;
     },
-    // setUserlist: (state,action) => {
-    //     return{
-    //         ...state,
-    //         userlist: [...state.userlist, action.payload],
-    //        }
+
+    // setUsercount: (state,action) => {
+    //     state.usercount = action.payload;
     // }
+
   },
   extraReducers: {
     [getUserlist.pending]: (state) => {
@@ -51,6 +58,6 @@ export const usernameSlice = createSlice({
   },
 });
 
-export const { setUsername} = usernameSlice.actions;
+export const { setUsername, /*setUsercount*/ } = usernameSlice.actions;
 
 export default usernameSlice.reducer;
