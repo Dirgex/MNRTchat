@@ -1,27 +1,42 @@
 import logo from "../assets/mnrtchatlogo.png";
 import HandleMessage from "../components/handlemessage";
 import HandleChatlog from "../components/handlechatlog";
+import HandleOnlineUsers from "../components/handleonlineusers";
 import { useSelector, useDispatch } from "react-redux";
 import Pusher from "pusher-js";
 import { useEffect } from "react";
 import env from "react-dotenv";
 import { setChatlog } from "../redux/chatlog";
+import { getUserlist } from "../redux/username";
+
 
 const Chat = () => {
   const { user } = useSelector((state) => state.username);
   const { chat } = useSelector((state) => state.chatlog);
+  const { userlist } = useSelector((state) => state.username);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const pusher = new Pusher(env.PUSHERKEY, {
       cluster: "eu",
     });
+
+    dispatch(getUserlist());
+
+
+
     const globalRoom = pusher.subscribe("global_room");
     globalRoom.bind("message", function (data) {
       console.log(data);
-      //console.log(data.subscription_count);
       dispatch(setChatlog(data));
+
     });
+
+    const checkConnections = pusher.subscribe("check");
+    checkConnections.bind("connection", function(data){
+       dispatch(getUserlist());
+        console.log("is logged in: " + data)
+    })
 
     // globalRoom.bind("pusher:subscription_count", function (pusherdata) {
     //   console.log(pusherdata);
@@ -83,17 +98,15 @@ const Chat = () => {
             <p>Global</p>
             <p>Testing</p>
             <p>React</p>
-
-              <h4 className="my-3">
-                <u>Users online</u>
-              </h4>
-            <p>{console.log()}</p>
+            <HandleOnlineUsers userlist={userlist}/>
 
           </div>
-          <div className="col-10 border overflow-auto" style= {{height: "550px"}}>
+          <div
+            className="col-10 border overflow-auto"
+            style={{ height: "550px" }}
+          >
             <h1 className="my-3">Room : Global</h1>
-            <HandleChatlog chat={chat}
-            user={user} />
+            <HandleChatlog chat={chat} user={user} />
             <HandleMessage user={user} />
           </div>
         </div>

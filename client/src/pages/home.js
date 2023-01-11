@@ -2,7 +2,8 @@ import { React } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/mnrtchatlogo.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsername, sendUsername } from '../redux/username';
+import { setUsername, sendUsername} from '../redux/username';
+
 
 const Home = () => {
   const { user } = useSelector((state) => state.username);

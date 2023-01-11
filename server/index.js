@@ -32,14 +32,14 @@ app.post('/message', (req, res) => {
 });
 
 app.get('/username/get', (req, res) => {
-  //pusher.trigger('global_room', 'message', reqBody);
+
   res.send(reqBody)
 });
 
 
-
 app.post('/username/post', (req, res) => {
   reqBody.push(req.body.username);
+  pusher.trigger('check', 'connection', reqBody);
   //pusher.trigger('global_room', 'message', reqBody);
   res.send(reqBody)
 });

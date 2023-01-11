@@ -34,10 +34,8 @@ export const messageSlice = createSlice({
     [sendMessage.fulfilled]: (state) => {
       state.msg = "";
       state.isLoading = false;
-      console.log(state.msg);
     },
     [sendMessage.rejected]: (state) => {
-      console.log(state);
       state.isLoading = false;
     },
   },
