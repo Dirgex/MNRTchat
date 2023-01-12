@@ -19,8 +19,6 @@ const pusher = new Pusher({
   useTLS: true
 });
 
-const reqBody = [];
-
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
