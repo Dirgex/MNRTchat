@@ -7,38 +7,75 @@ import Pusher from "pusher-js";
 import { useEffect } from "react";
 import env from "react-dotenv";
 import { setChatlog } from "../redux/chatlog";
-import { getUserlist,deleteUser,/*setUsercount*/ } from "../redux/username";
-
+import { setUserlist, deleteUserFromList, updateUserlistOnBack } from "../redux/username";
 
 const Chat = () => {
   const { user } = useSelector((state) => state.username);
+  const { userid } = useSelector((state) => state.username);
   const { chat } = useSelector((state) => state.chatlog);
   const { userlist } = useSelector((state) => state.username);
- //const { usercount } = useSelector((state) => state.username);
+  //usercount if userlist doesnt  work
+  //const { usercount } = useSelector((state) => state.username);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const pusher = new Pusher(env.PUSHERKEY, {
       cluster: "eu",
+
+      userAuthentication: {
+        params: {
+          userid : userid,
+          user : user
+        },
+        endpoint: "http://localhost:3001/pusher/user-auth",
+      },
+
+      channelAuthorization: {
+        endpoint: "http://localhost:3001/pusher/auth",
+      },
     });
-    // Pusher.logToConsole = true;
 
-    dispatch(getUserlist());
 
-    const globalRoom = pusher.subscribe("global_room");
-    globalRoom.bind("message", function (data) {
-      console.log(data);
-      dispatch(setChatlog(data));
+    Pusher.logToConsole = true;
+    pusher.signin();
 
-    });
 
-    const checkConnections = pusher.subscribe("check");
-    checkConnections.bind("connection", function(data){
-       dispatch(getUserlist());
-        console.log("is logged in: " + data)
-        console.log(data)
+
+    const presence_global = pusher.subscribe("presence-globalroom");
+
+    presence_global.bind("pusher:subscription_succeeded", ()=> {
+      presence_global.members.each((member) => dispatch(setUserlist(member.info.user)))
+
+
     })
 
+    presence_global.bind("pusher:member_added", (member) => {
+     dispatch(setUserlist(member.info.user));
+
+    });
+
+    presence_global.bind("pusher:member_removed", (member) => {
+      console.log(member.info.user);
+      dispatch(deleteUserFromList(member.info.user));
+    });
+
+    presence_global.bind("message", function (data) {
+
+      dispatch(setChatlog(data));
+    });
+
+    pusher.connection.bind('disconnected', () =>{
+     dispatch(updateUserlistOnBack());
+      pusher.unsubscribe("presence-globalroom");
+      pusher.disconnect();
+    })
+
+    // const checkConnections = pusher.subscribe("check");
+    // checkConnections.bind("connection", function(data){
+    //    dispatch(getUserlist());
+    //     console.log("is logged in: " + data)
+    //     console.log(data)
+    // })
 
     //working code for user count but its too easy.
     /*
@@ -56,12 +93,11 @@ const Chat = () => {
     // });
 
     return () => {
-      pusher.unsubscribe("global_room");
+      pusher.unsubscribe("presence-globalroom");
       pusher.disconnect();
-      //dispatch(deleteUser(user));
-      console.log(user)
+
     };
-  }, [dispatch,user]);
+  }, [dispatch,user,userid]);
 
   return (
     <div className="chatwindow">
@@ -85,7 +121,7 @@ const Chat = () => {
         </div>
         <div className="row m-3">
           <div className="col-2 d-none d-sm-block border text-center">
-            <h4 className="my-3 underline">
+            <h4 className="my-3">
               <u>Room list</u>
             </h4>
             <button className="btn btn-lg btn-success my-3">
@@ -95,15 +131,15 @@ const Chat = () => {
             <p>Testing</p>
             <p>React</p>
 
-            <HandleOnlineUsers userlist={userlist}/>
-
+            <HandleOnlineUsers userlist={userlist} />
           </div>
           <div
             className="col-10 border overflow-auto"
             style={{ height: "550px" }}
           >
             <h1 className="my-3">Room : Global</h1>
-            <HandleChatlog chat={chat} user={user} />
+
+            <HandleChatlog chat={chat} user={user} userlist={userlist} />
             <HandleMessage user={user} />
           </div>
         </div>

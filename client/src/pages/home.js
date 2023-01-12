@@ -2,18 +2,19 @@ import { React } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/mnrtchatlogo.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsername, sendUsername} from '../redux/username';
+import { setUsername} from '../redux/username';
 
 
 const Home = () => {
   const { user } = useSelector((state) => state.username);
+  // const { userid } = useSelector((state) => state.username);
   const dispatch = useDispatch();
 
   const goToChat = () => {
     if (!user) {
         alert("Enter a username");
     }else{
-        dispatch(sendUsername({username : user}));
+        dispatch(setUsername( user ));
     }
   };
 

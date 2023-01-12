@@ -1,14 +1,17 @@
 import { useEffect, useRef } from "react";
+import HandleAnnounceUser from "./handleannounceuser";
 
-const HandleChatlog = ({ chat, user }) => {
+const HandleChatlog = ({ chat, user,userlist }) => {
   const autoScroll = useRef(null);
 
   useEffect(() => {
     autoScroll.current?.scrollIntoView({ behavior: "smooth" });
+
   });
 
   return (
     <>
+ <HandleAnnounceUser userlist={userlist}/>
       {chat.map((item) => {
         if (item.username === user)
           return (
@@ -16,6 +19,7 @@ const HandleChatlog = ({ chat, user }) => {
               <p className="ownBgText col-6 ms-auto p-2 ms-3 mb-1 rounded-3 text-end text-break">
                 {item.msg}
               </p>
+
 
               <p className="col-2 ms-auto ms-3 mb-3 rounded-3 text-end text-muted">
                 You - {item.timestamp}
@@ -37,6 +41,7 @@ const HandleChatlog = ({ chat, user }) => {
             </div>
           );
       })}
+
     </>
   );
 };

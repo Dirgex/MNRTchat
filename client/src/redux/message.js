@@ -19,7 +19,6 @@ export const messageSlice = createSlice({
   reducers: {
     setMessage: (state, action) => {
       state.msg = action.payload;
-      console.log(action.payload);
     },
   },
   extraReducers: {
