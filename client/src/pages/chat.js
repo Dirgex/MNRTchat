@@ -7,13 +7,19 @@ import Pusher from "pusher-js";
 import { useEffect } from "react";
 import env from "react-dotenv";
 import { setChatlog } from "../redux/chatlog";
-import { setUserlist, deleteUserFromList, updateUserlistOnBack } from "../redux/username";
+import {
+  setUserlist,
+  deleteUserFromList,
+  updateUserlistOnBack,
+} from "../redux/username";
+import { useNavigate } from "react-router-dom";
 
 const Chat = () => {
   const { user } = useSelector((state) => state.username);
   const { userid } = useSelector((state) => state.username);
   const { chat } = useSelector((state) => state.chatlog);
   const { userlist } = useSelector((state) => state.username);
+  const navigate = useNavigate();
   //usercount if userlist doesnt  work
   //const { usercount } = useSelector((state) => state.username);
   const dispatch = useDispatch();
@@ -24,34 +30,35 @@ const Chat = () => {
 
       userAuthentication: {
         params: {
-          userid : userid,
-          user : user
+          userid: userid,
+          user: user,
         },
         endpoint: "http://localhost:3001/pusher/user-auth",
       },
 
       channelAuthorization: {
+        params: {
+          userid: userid,
+          user: user,
+        },
         endpoint: "http://localhost:3001/pusher/auth",
       },
     });
 
-
     Pusher.logToConsole = true;
     pusher.signin();
 
-
-
     const presence_global = pusher.subscribe("presence-globalroom");
 
-    presence_global.bind("pusher:subscription_succeeded", ()=> {
-      presence_global.members.each((member) => dispatch(setUserlist(member.info.user)))
 
-
-    })
+    presence_global.bind("pusher:subscription_succeeded", () => {
+      presence_global.members.each((member) =>
+        dispatch(setUserlist(member.info.user))
+      );
+    });
 
     presence_global.bind("pusher:member_added", (member) => {
-     dispatch(setUserlist(member.info.user));
-
+      dispatch(setUserlist(member.info.user));
     });
 
     presence_global.bind("pusher:member_removed", (member) => {
@@ -60,15 +67,21 @@ const Chat = () => {
     });
 
     presence_global.bind("message", function (data) {
-
       dispatch(setChatlog(data));
     });
 
-    pusher.connection.bind('disconnected', () =>{
-     dispatch(updateUserlistOnBack());
+    pusher.connection.bind("disconnected", () => {
+      dispatch(updateUserlistOnBack());
       pusher.unsubscribe("presence-globalroom");
       pusher.disconnect();
+    });
+
+    presence_global.bind("pusher:subscription_error", () =>{
+      navigate(-1);
+      alert("User already exists in chat");
     })
+
+
 
     // const checkConnections = pusher.subscribe("check");
     // checkConnections.bind("connection", function(data){
@@ -95,9 +108,8 @@ const Chat = () => {
     return () => {
       pusher.unsubscribe("presence-globalroom");
       pusher.disconnect();
-
     };
-  }, [dispatch,user,userid]);
+  }, [dispatch, user, userid,navigate]);
 
   return (
     <div className="chatwindow">
@@ -120,8 +132,8 @@ const Chat = () => {
           </div>
         </div>
         <div className="row m-3">
-          <div className="col-2 d-none d-sm-block border text-center">
-            <h4 className="my-3">
+          <div className="col-2 d-none d-sm-block border border-success rounded text-center">
+            <h4 className="my-3 text-success">
               <u>Room list</u>
             </h4>
             <button className="btn btn-lg btn-success my-3">
@@ -134,11 +146,9 @@ const Chat = () => {
             <HandleOnlineUsers userlist={userlist} />
           </div>
           <div
-            className="col-10 border overflow-auto"
+            className="col-10 border border-success rounded overflow-auto"
             style={{ height: "550px" }}
           >
-            <h1 className="my-3">Room : Global</h1>
-
             <HandleChatlog chat={chat} user={user} userlist={userlist} />
             <HandleMessage user={user} />
           </div>

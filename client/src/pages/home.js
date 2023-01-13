@@ -10,13 +10,13 @@ const Home = () => {
   // const { userid } = useSelector((state) => state.username);
   const dispatch = useDispatch();
 
-  const goToChat = () => {
-    if (!user) {
-        alert("Enter a username");
-    }else{
-        dispatch(setUsername( user ));
-    }
-  };
+    const goToChat = () => {
+      if (!user) {
+          alert("Enter a username");
+      }else{
+          dispatch(setUsername( user ));
+      }
+    };
 
   return (
     <>
