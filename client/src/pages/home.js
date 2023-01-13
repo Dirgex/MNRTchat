@@ -1,35 +1,29 @@
-import { React } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/mnrtchatlogo.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUsername} from '../redux/username';
-
+import { React } from "react";
+import { Link } from "react-router-dom";
+import logo from "../assets/mnrtchatlogo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsername } from "../redux/username";
 
 const Home = () => {
   const { user } = useSelector((state) => state.username);
   // const { userid } = useSelector((state) => state.username);
   const dispatch = useDispatch();
 
-    const goToChat = () => {
-      if (!user) {
-          alert("Enter a username");
-      }else{
-          dispatch(setUsername( user ));
-      }
-    };
+  const goToChat = () => {
+    if (!user) {
+      alert("Enter a username");
+    } else {
+      dispatch(setUsername(user));
+    }
+  };
 
   return (
     <>
       <div className="home">
-        <img
-          alt="logo"
-          className="rounded"
-          src={logo}
-          height="100px"
-          width="200px"
-        />
+        <img alt="logo" className="img-fluid rounded" src={logo} width="35%" />
+
         <h2>Enter your username</h2>
-        <p>Your username will be :  {user}</p>
+        <p>Your username will be : {user}</p>
         <form onSubmit={goToChat}>
           <div className="input-group">
             <input

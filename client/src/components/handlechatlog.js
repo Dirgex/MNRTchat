@@ -15,7 +15,7 @@ const HandleChatlog = ({ chat, user }) => {
         if (item.username === user)
           return (
             <div key={item.id}>
-              <p className="ownBgText col-6 ms-auto p-2- ms-3 mb-1 rounded-3 text-end text-break">
+              <p className="ownBgText col-6 ms-auto p-2 mt-3 ms-3 p-2 mb-1 rounded-3 text-end text-break">
                 {item.msg}
               </p>
 
@@ -30,7 +30,7 @@ const HandleChatlog = ({ chat, user }) => {
           return (
             <div key={item.id}>
 
-              <p className="otherBgText col-6 p-2 mb-1 rounded-3 text-break">
+              <p className="otherBgText col-6 p-2 mb-1 mt-3 rounded-3 text-break">
                 {item.msg}
               </p>
               <p className="col-2 mb-3 rounded-3 text-muted">

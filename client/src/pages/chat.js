@@ -117,36 +117,26 @@ const Chat = () => {
         <div className="row mt-3 text-center">
           <div className="col">
             <img
-              className="rounded"
+              className="col-12 col-md-4 img-fluid rounded"
               alt="logo"
               src={logo}
-              height="100px"
-              width="200px"
             />
           </div>
-          <div className="col">
-            <h1>Welcome {user}!</h1>
+          <div className="col col-md-4 my-3">
+            <h3>Welcome {user}!</h3>
           </div>
           <div className="col my-3">
-            <button className="btn btn-success btn-lg">Logout</button>
+            <button onClick={()=> navigate(-1)}className="btn btn-success btn-lg">Logout</button>
           </div>
         </div>
         <div className="row m-3">
-          <div className="col-2 d-none d-sm-block border border-success rounded text-center">
-            <h4 className="my-3 text-success">
-              <u>Room list</u>
-            </h4>
-            <button className="btn btn-lg btn-success my-3">
-              <i className="bi bi-plus-circle"></i>
-            </button>
-            <p>Global</p>
-            <p>Testing</p>
-            <p>React</p>
+          <div className="sm-block col-md-2 border border-success rounded text-center">
+
 
             <HandleOnlineUsers userlist={userlist} />
           </div>
           <div
-            className="col-10 border border-success rounded overflow-auto"
+            className="col border border-success rounded overflow-auto"
             style={{ height: "550px" }}
           >
             <HandleChatlog chat={chat} user={user} userlist={userlist} />
