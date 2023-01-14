@@ -34,10 +34,9 @@ app.post("/pusher/user-auth", async function (req, res) {
   if (result.status === 200) {
     const bodyRes = await result.json();
     const users = bodyRes.users;
-    console.log(users);
 
     const found = users.find((u) => u.id === req.body.user);
-    console.log(found);
+
     if (!found) {
       const socketId = req.body.socket_id;
       const userData = {

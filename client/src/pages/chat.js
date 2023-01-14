@@ -15,7 +15,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Chat = () => {
-
   //Selectors used to get data from the store
   //Dispatch used to use the actions or thunks
   const { user } = useSelector((state) => state.username);
@@ -26,7 +25,6 @@ const Chat = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     //Bunch of Pusher stuff like hooking into when someone is connected or leaving
     const pusher = new Pusher(env.PUSHERKEY, {
       cluster: "eu",
@@ -63,7 +61,6 @@ const Chat = () => {
     });
 
     presence_global.bind("pusher:member_removed", (member) => {
-      console.log(member.info.user);
       dispatch(deleteUserFromList(member.info.user));
     });
 
