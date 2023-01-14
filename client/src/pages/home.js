@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/mnrtchatlogo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsername } from "../redux/username";
@@ -8,20 +8,27 @@ const Home = () => {
   const { user } = useSelector((state) => state.username);
   // const { userid } = useSelector((state) => state.username);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const whiteSpaceCheck = new RegExp(/\s/);
 
   const goToChat = () => {
-    if (!user) {
-      alert("Enter a username");
-    } else {
+    if (user.length > 20) {
+      alert("Max 20 letters");
+    } else if(!user){
+      alert("You have to enter a username");
+    }else if (whiteSpaceCheck.test(user)) {
+      alert("No whitespace in username");
+    }
+    else {
       dispatch(setUsername(user));
+      navigate("/chat");
     }
   };
 
   return (
     <>
       <div className="home">
-        <img alt="logo" className="img-fluid rounded" src={logo} width="35%" />
-
+        <img alt="logo" className="col-6 col-md-3 col-lg-2 img-fluid rounded" src={logo} width="35%" />
         <h2>Enter your username</h2>
         <p>Your username will be : {user}</p>
         <form onSubmit={goToChat}>
@@ -31,12 +38,11 @@ const Home = () => {
               className="form-control mx-3"
               value={user}
               onChange={(e) => dispatch(setUsername(e.target.value))}
+
             ></input>
-            <Link to={user ? "/chat" : "#"}>
               <button className="btn btn-lg btn-success" onClick={goToChat}>
                 Submit
               </button>
-            </Link>
           </div>
         </form>
       </div>

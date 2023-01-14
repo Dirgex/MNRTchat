@@ -50,7 +50,6 @@ const Chat = () => {
 
     const presence_global = pusher.subscribe("presence-globalroom");
 
-
     presence_global.bind("pusher:subscription_succeeded", () => {
       presence_global.members.each((member) =>
         dispatch(setUserlist(member.info.user))
@@ -76,12 +75,10 @@ const Chat = () => {
       pusher.disconnect();
     });
 
-    presence_global.bind("pusher:subscription_error", () =>{
+    presence_global.bind("pusher:subscription_error", () => {
       navigate(-1);
-      alert("User already exists in chat");
-    })
-
-
+      alert("User already exists in chat or something else went wrong");
+    });
 
     // const checkConnections = pusher.subscribe("check");
     // checkConnections.bind("connection", function(data){
@@ -109,36 +106,42 @@ const Chat = () => {
       pusher.unsubscribe("presence-globalroom");
       pusher.disconnect();
     };
-  }, [dispatch, user, userid,navigate]);
+  }, [dispatch, user, userid, navigate]);
 
   return (
     <div className="chatwindow">
       <div className="container-fluid ">
-        <div className="row mt-3 text-center">
+        <div className="row mt-3 mx-5">
           <div className="col">
             <img
-              className="col-12 col-md-4 img-fluid rounded"
+              className="col-12 col-sm-4 col-md-3 col-lg-2 rounded"
               alt="logo"
               src={logo}
+              width="50%"
+
             />
           </div>
-          <div className="col col-md-4 my-3">
-            <h3>Welcome {user}!</h3>
-          </div>
-          <div className="col my-3">
-            <button onClick={()=> navigate(-1)}className="btn btn-success btn-lg">Logout</button>
+
+          <div className="col my-3 d-flex justify-content-end">
+            <button
+              onClick={() => navigate(-1)}
+              className="btn btn-success btn-lg"
+            >
+              Logout
+            </button>
           </div>
         </div>
         <div className="row m-3">
           <div className="sm-block col-md-2 border border-success rounded text-center">
-
-
             <HandleOnlineUsers userlist={userlist} />
           </div>
           <div
             className="col border border-success rounded overflow-auto"
             style={{ height: "550px" }}
           >
+            <div className="text-center my-3 text-success">
+              <h3>Welcome {user}!</h3>
+            </div>
             <HandleChatlog chat={chat} user={user} userlist={userlist} />
             <HandleMessage user={user} />
           </div>
