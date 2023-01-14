@@ -15,16 +15,19 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Chat = () => {
+
+  //Selectors used to get data from the store
+  //Dispatch used to use the actions or thunks
   const { user } = useSelector((state) => state.username);
   const { userid } = useSelector((state) => state.username);
   const { chat } = useSelector((state) => state.chatlog);
   const { userlist } = useSelector((state) => state.username);
   const navigate = useNavigate();
-  //usercount if userlist doesnt  work
-  //const { usercount } = useSelector((state) => state.username);
   const dispatch = useDispatch();
 
   useEffect(() => {
+
+    //Bunch of Pusher stuff like hooking into when someone is connected or leaving
     const pusher = new Pusher(env.PUSHERKEY, {
       cluster: "eu",
 
@@ -45,7 +48,6 @@ const Chat = () => {
       },
     });
 
-    Pusher.logToConsole = true;
     pusher.signin();
 
     const presence_global = pusher.subscribe("presence-globalroom");
@@ -80,28 +82,6 @@ const Chat = () => {
       alert("User already exists in chat or something else went wrong");
     });
 
-    // const checkConnections = pusher.subscribe("check");
-    // checkConnections.bind("connection", function(data){
-    //    dispatch(getUserlist());
-    //     console.log("is logged in: " + data)
-    //     console.log(data)
-    // })
-
-    //working code for user count but its too easy.
-    /*
-    const pusherCheck = pusher.subscribe("pushercheck");
-    pusherCheck.bind("pusher:subscription_count", function(data){
-        console.log(data.subscription_count)
-        dispatch(setUsercount(data.subscription_count))
-        console.log(data)
-    })
-    */
-
-    // globalRoom.bind("pusher:subscription_count", function (pusherdata) {
-    //   console.log(pusherdata);
-    //   console.log(pusherdata.subscription_count);
-    // });
-
     return () => {
       pusher.unsubscribe("presence-globalroom");
       pusher.disconnect();
@@ -118,7 +98,6 @@ const Chat = () => {
               alt="logo"
               src={logo}
               width="50%"
-
             />
           </div>
 

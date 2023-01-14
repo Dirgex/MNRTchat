@@ -8,9 +8,11 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+
 const app = express();
 const port = 3001;
 
+//Create new pusher instance
 const pusher = new Pusher({
   appId: process.env.APP_ID,
   key: process.env.KEY,
@@ -19,13 +21,16 @@ const pusher = new Pusher({
   useTLS: true,
 });
 
+//Make our server have some extra security and a bodyparser
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.post("/pusher/user-auth", async function (req, res) {
-  // user = whoIsLoggedIn();
 
+//Pusher endpoint for user authenticating
+app.post("/pusher/user-auth", async function (req, res) {
+
+  //Getting all users in presence globalroom, make a check on if username is taken, if taken send an error status.
   const result = await pusher.get({
     path: "/channels/presence-globalroom/users",
   });
@@ -56,6 +61,7 @@ app.post("/pusher/user-auth", async function (req, res) {
   }
 });
 
+//Pusher endpoint for authorization authorize people to use the channel.
 app.post("/pusher/auth", async function (req, res) {
   const socketId = req.body.socket_id;
   const channel = req.body.channel_name;
@@ -64,24 +70,12 @@ app.post("/pusher/auth", async function (req, res) {
   res.send(auth);
 });
 
+//Endpoint created to recieve message from frontend and trigger pusher event.
 app.post("/message", (req, res) => {
   const reqBody = req.body;
   pusher.trigger("presence-globalroom", "message", reqBody);
   res.send(reqBody);
 });
 
-// app.post('/username/post', (req, res) => {
-//   reqBody.unshift(req.body);
-
-//   pusher.trigger('check', 'connection', reqBody);
-//   //pusher.trigger('global_room', 'message', reqBody);
-//   res.send(reqBody)
-// });
-
-// app.delete('/username/delete', (req,res)=> {
-//   reqBody.splice(reqBody.indexOf(req.body.username), 1);
-//   pusher.trigger('check', 'connection', reqBody);
-//   res.send(reqBody);
-// })
-
+//Backend listening to port set and localhost
 app.listen(port, () => console.log("Server started"));

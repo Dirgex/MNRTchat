@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sendMessageApi } from "../api/api";
 
+//createAsyncThunk when using api calls as a redux middleware
 export const sendMessage = createAsyncThunk(
   "message/sendMessage",
   async (msg) => {
@@ -21,12 +22,8 @@ export const messageSlice = createSlice({
       state.msg = action.payload;
     },
   },
+  // Extrareducers required for createasyncthunk
   extraReducers: {
-    // another way of doing it
-    // builder.addCase(sendMessage.pending, (state) => {
-    //     console.log(state.msg)
-    //     console.log("hej")
-    // })
     [sendMessage.pending]: (state) => {
       state.isLoading = true;
     },

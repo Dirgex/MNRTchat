@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
 
-
 const HandleChatlog = ({ chat, user }) => {
   const autoScroll = useRef(null);
 
   useEffect(() => {
+    //used to autoscroll when new messages start reaching goes to bottom of screen
     autoScroll.current?.scrollIntoView({ behavior: "smooth" });
-
   });
 
   return (
@@ -19,7 +18,6 @@ const HandleChatlog = ({ chat, user }) => {
                 {item.msg}
               </p>
 
-
               <p className="col-4 ms-auto ms-3 mb-3 rounded-3 text-end text-muted">
                 You - {item.timestamp}
               </p>
@@ -29,7 +27,6 @@ const HandleChatlog = ({ chat, user }) => {
         else
           return (
             <div key={item.id}>
-
               <p className="otherBgText col-6 p-2 mb-1 mt-3 rounded-3 text-break">
                 {item.msg}
               </p>
@@ -40,7 +37,6 @@ const HandleChatlog = ({ chat, user }) => {
             </div>
           );
       })}
-
     </>
   );
 };
