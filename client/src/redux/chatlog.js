@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//Create a redux slice for chatlog
 export const chatlogSlice = createSlice({
   name: "chatlog",
   initialState: {
     chat: [],
   },
 
+  //Reducers and actions
   reducers: {
     setChatlog: (state, action) => {
-       return{
+      return {
         ...state,
         chat: [...state.chat, action.payload],
-       }
+      };
     },
   },
 });

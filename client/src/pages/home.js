@@ -6,7 +6,6 @@ import { setUsername } from "../redux/username";
 
 const Home = () => {
   const { user } = useSelector((state) => state.username);
-  // const { userid } = useSelector((state) => state.username);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const whiteSpaceCheck = new RegExp(/\s/);
@@ -14,12 +13,11 @@ const Home = () => {
   const goToChat = () => {
     if (user.length > 20) {
       alert("Max 20 letters");
-    } else if(!user){
+    } else if (!user) {
       alert("You have to enter a username");
-    }else if (whiteSpaceCheck.test(user)) {
+    } else if (whiteSpaceCheck.test(user)) {
       alert("No whitespace in username");
-    }
-    else {
+    } else {
       dispatch(setUsername(user));
       navigate("/chat");
     }
@@ -28,7 +26,12 @@ const Home = () => {
   return (
     <>
       <div className="home">
-        <img alt="logo" className="col-6 col-md-3 col-lg-2 img-fluid rounded" src={logo} width="35%" />
+        <img
+          alt="logo"
+          className="col-6 col-md-3 col-lg-2 img-fluid rounded"
+          src={logo}
+          width="35%"
+        />
         <h2>Enter your username</h2>
         <p>Your username will be : {user}</p>
         <form onSubmit={goToChat}>
@@ -38,11 +41,10 @@ const Home = () => {
               className="form-control mx-3"
               value={user}
               onChange={(e) => dispatch(setUsername(e.target.value))}
-
             ></input>
-              <button className="btn btn-lg btn-success" onClick={goToChat}>
-                Submit
-              </button>
+            <button className="btn btn-lg btn-success" onClick={goToChat}>
+              Submit
+            </button>
           </div>
         </form>
       </div>

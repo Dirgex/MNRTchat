@@ -8,7 +8,6 @@ export const usernameSlice = createSlice({
     userlist: [],
     isLoading: false,
     userid: "",
-
   },
 
   reducers: {
@@ -41,7 +40,6 @@ export const usernameSlice = createSlice({
       state.userlist = [];
     },
   },
-
 });
 
 export const {

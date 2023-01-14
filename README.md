@@ -12,12 +12,10 @@ npm start while on client
 
 Also need to setup own pusher account and set keys in .env in both server and client
 
-###Client
-env :
+Client
 PUSHERKEY="yourkeyhere"
 
-###Server
-env :
+Server
 APP_ID = "yourkeyhere"
 KEY = "yourkeyhere"
 SECRET = "yourkeyhere"

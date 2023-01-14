@@ -6,10 +6,10 @@ const HandleMessage = ({ user }) => {
   const { msg } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   const date = new Date();
-  let timestamp = date.toLocaleTimeString('SE',{
-    hour: '2-digit',
-    minute: '2-digit'
-  })
+  let timestamp = date.toLocaleTimeString("SE", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <>
@@ -27,7 +27,14 @@ const HandleMessage = ({ user }) => {
           ></input>
           <button
             onClick={() =>
-              dispatch(sendMessage({ id: uuidv4(), msg, username: user, timestamp: timestamp }))
+              dispatch(
+                sendMessage({
+                  id: uuidv4(),
+                  msg,
+                  username: user,
+                  timestamp: timestamp,
+                })
+              )
             }
             className="btn btn-success ms-2"
           >

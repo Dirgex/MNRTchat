@@ -5,7 +5,7 @@ import { sendMessageApi } from "../api/api";
 export const sendMessage = createAsyncThunk(
   "message/sendMessage",
   async (msg) => {
-    return sendMessageApi(msg)
+    return sendMessageApi(msg);
   }
 );
 

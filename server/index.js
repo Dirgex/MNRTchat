@@ -8,7 +8,6 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-
 const app = express();
 const port = 3001;
 
@@ -26,10 +25,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 //Pusher endpoint for user authenticating
 app.post("/pusher/user-auth", async function (req, res) {
-
   //Getting all users in presence globalroom, make a check on if username is taken, if taken send an error status.
   const result = await pusher.get({
     path: "/channels/presence-globalroom/users",
@@ -39,25 +36,24 @@ app.post("/pusher/user-auth", async function (req, res) {
     const users = bodyRes.users;
     console.log(users);
 
-    const found = users.find(u => u.id === req.body.user)
+    const found = users.find((u) => u.id === req.body.user);
     console.log(found);
-    if(!found){
-    const socketId = req.body.socket_id;
-    const userData = {
-      id: req.body.user,
-      user_info: {
-        user: req.body.user,
-        user_id: req.body.id,
-      },
-    };
-    const auth = pusher.authenticateUser(socketId, userData);
+    if (!found) {
+      const socketId = req.body.socket_id;
+      const userData = {
+        id: req.body.user,
+        user_info: {
+          user: req.body.user,
+          user_id: req.body.id,
+        },
+      };
+      const auth = pusher.authenticateUser(socketId, userData);
 
-    res.send(auth);
-  }else{
-    res.status(400).send('User exists');
-    return
-  }
-
+      res.send(auth);
+    } else {
+      res.status(400).send("User exists");
+      return;
+    }
   }
 });
 

@@ -7,7 +7,6 @@ import React from "react";
 import ProtectedRoute from "./components/protectedroute";
 
 function App() {
-
   return (
     <div className="App">
       <Routes>
