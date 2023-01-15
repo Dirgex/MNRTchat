@@ -9,6 +9,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const whiteSpaceCheck = new RegExp(/\s/);
+  const onlyAZ = new RegExp(/^[A-Za-z]*$/);
 
   const goToChat = () => {
     if (user.length > 20) {
@@ -17,7 +18,9 @@ const Home = () => {
       alert("You have to enter a username");
     } else if (whiteSpaceCheck.test(user)) {
       alert("No whitespace in username");
-    } else {
+    } else if (!onlyAZ.test(user)) {
+      alert("Only A-Z in username");
+    }  else {
       dispatch(setUsername(user));
       navigate("/chat");
     }
