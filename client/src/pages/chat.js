@@ -34,7 +34,7 @@ const Chat = () => {
           userid: userid,
           user: user,
         },
-        endpoint: "http://localhost:3001/pusher/user-auth",
+        endpoint: "https://mnrtchat-server.onrender.com//pusher/user-auth",
       },
 
       channelAuthorization: {
@@ -42,7 +42,7 @@ const Chat = () => {
           userid: userid,
           user: user,
         },
-        endpoint: "http://localhost:3001/pusher/auth",
+        endpoint: "https://mnrtchat-server.onrender.com//pusher/auth",
       },
     });
 
