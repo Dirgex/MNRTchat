@@ -27,6 +27,10 @@ const HandleMessage = ({ user }) => {
           ></input>
           <button
             onClick={() =>
+              {
+                if(!msg){
+                  return;
+                }else{
               dispatch(
                 sendMessage({
                   id: uuidv4(),
@@ -36,6 +40,8 @@ const HandleMessage = ({ user }) => {
                 })
               )
             }
+            }
+          }
             className="btn btn-success ms-2"
           >
             <i className="bi bi-send"></i>
