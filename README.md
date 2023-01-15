@@ -1,7 +1,7 @@
 # MNRTchat
 Realtime chat using React,ExpressJs and pusher
 
-Also need to setup own pusher account and set keys in .env in both server and client
+Need to setup own pusher account and set keys in .env in both server and client
 
 Client
 PUSHERKEY="yourkeyhere"
