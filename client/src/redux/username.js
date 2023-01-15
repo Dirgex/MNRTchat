@@ -17,18 +17,15 @@ export const usernameSlice = createSlice({
     },
 
     setUserlist: (state, action) => {
+      if (state.userlist.find((u) => u === action.payload)) {
+        return state;
+      }
       return {
         ...state,
         userlist: [...state.userlist, action.payload],
       };
     },
 
-    getUserlist: (state) => {
-      return {
-        ...state,
-        userlist: [...state.userlist],
-      };
-    },
     deleteUserFromList: (state, action) => {
       return {
         ...state,
@@ -45,7 +42,6 @@ export const usernameSlice = createSlice({
 export const {
   setUsername,
   setUserlist,
-  getUserlist,
   deleteUserFromList,
   updateUserlistOnBack,
 } = usernameSlice.actions;
