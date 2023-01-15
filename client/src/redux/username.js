@@ -17,7 +17,7 @@ export const usernameSlice = createSlice({
     },
 
     setUserlist: (state, action) => {
-      if (!state.userlist.find((u) => u === action.payload)) {
+      if (state.userlist.find((u) => u === action.payload)) {
         return state;
       }
       return {

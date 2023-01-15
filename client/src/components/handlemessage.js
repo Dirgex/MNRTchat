@@ -26,21 +26,20 @@ const HandleMessage = ({ user }) => {
             onChange={(e) => dispatch(setMessage(e.target.value))}
           ></input>
           <button
-            onClick={() =>
-              { if(!msg){
+            onClick={() => {
+              if (!msg) {
                 return;
-              }else{
-              dispatch(
-                sendMessage({
-                  id: uuidv4(),
-                  msg,
-                  username: user,
-                  timestamp: timestamp,
-                })
-              )
-            }
-            }
-          }
+              } else {
+                dispatch(
+                  sendMessage({
+                    id: uuidv4(),
+                    msg,
+                    username: user,
+                    timestamp: timestamp,
+                  })
+                );
+              }
+            }}
             className="btn btn-success ms-2"
           >
             <i className="bi bi-send"></i>
